@@ -85,9 +85,7 @@ body {
 .load-more-btn {
   display: block;
   width: 125px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 32px;
+  margin: 32px auto;
 }
 
 .search-btn:hover,
