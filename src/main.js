@@ -12,6 +12,7 @@ const loaderEl = document.querySelector('.loader');
 loaderEl.style.display = 'none';
 let page = 1;
 let userQuery = '';
+let modalWindow;
 
 const onSearchFormSubmit = async event => {
   try {
@@ -35,16 +36,10 @@ const onSearchFormSubmit = async event => {
     loaderEl.style.display = 'none';
 
     if (data.total === 0) {
-      iziToast.show({
+      iziToast.error({
         message:
           'Sorry, there are no images matching</br> your search query. Please try again!',
-        messageColor: '#fafafb',
-        messageSize: '16px',
-        messageLineHeight: '24px',
-        backgroundColor: '#ef4040',
-        theme: 'dark',
         position: 'topRight',
-        progressBarColor: '#b51b1b',
       });
 
       formEl.reset();
@@ -57,15 +52,9 @@ const onSearchFormSubmit = async event => {
     }
 
     if (data.totalHits === data.hits.length) {
-      iziToast.show({
+      iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
-        messageColor: '#000000',
-        messageSize: '16px',
-        messageLineHeight: '24px',
-        backgroundColor: '#b0e0e6',
-        theme: 'light',
         position: 'topRight',
-        progressBarColor: '#5f9ea0',
       });
     }
 
@@ -75,7 +64,7 @@ const onSearchFormSubmit = async event => {
 
     galleryEl.innerHTML = createGallery;
 
-    const modalWindow = new SimpleLightbox('.gallery a', {
+    modalWindow = new SimpleLightbox('.gallery a', {
       captionsData: 'alt',
     });
 
@@ -103,19 +92,15 @@ const onLoadMoreBtnClick = async event => {
 
     galleryEl.insertAdjacentHTML('beforeend', createGallery);
 
+    modalWindow.refresh();
+
     if (page === Math.ceil(data.totalHits / data.hits.length)) {
       loadMoreBtnEl.classList.add('is-hidden');
       loadMoreBtnEl.removeEventListener('click', onLoadMoreBtnClick);
 
-      iziToast.show({
+      iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
-        messageColor: '#000000',
-        messageSize: '16px',
-        messageLineHeight: '24px',
-        backgroundColor: '#b0e0e6',
-        theme: 'light',
         position: 'topRight',
-        progressBarColor: '#5f9ea0',
       });
     }
   } catch (err) {
