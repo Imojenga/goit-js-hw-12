@@ -13,6 +13,13 @@ loaderEl.style.display = 'none';
 let page = 1;
 let userQuery = '';
 let modalWindow;
+let galleryCardEl;
+let rect;
+let downScroll;
+
+const scrollGallery = downScroll => {
+  window.scrollBy({ top: downScroll, behavior: 'smooth' });
+};
 
 const onSearchFormSubmit = async event => {
   try {
@@ -69,6 +76,11 @@ const onSearchFormSubmit = async event => {
     });
 
     modalWindow.refresh();
+
+    galleryCardEl = document.querySelector('.gallery-item');
+    rect = galleryCardEl.getBoundingClientRect();
+
+    downScroll = (rect.bottom - rect.top) * 2 + 48;
   } catch (error) {
     loaderEl.style.display = 'none';
     console.log(error);
@@ -93,6 +105,8 @@ const onLoadMoreBtnClick = async event => {
     galleryEl.insertAdjacentHTML('beforeend', createGallery);
 
     modalWindow.refresh();
+
+    scrollGallery(downScroll);
 
     if (page === Math.ceil(data.totalHits / data.hits.length)) {
       loadMoreBtnEl.classList.add('is-hidden');
