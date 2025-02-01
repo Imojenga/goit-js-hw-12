@@ -110,7 +110,6 @@ const onLoadMoreBtnClick = async event => {
 
     if (page === Math.ceil(data.totalHits / data.hits.length)) {
       loadMoreBtnEl.classList.add('is-hidden');
-      loadMoreBtnEl.removeEventListener('click', onLoadMoreBtnClick);
 
       iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
