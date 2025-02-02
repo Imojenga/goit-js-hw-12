@@ -121,7 +121,7 @@ const onLoadMoreBtnClick = async event => {
   } catch (err) {
     loaderEl.style.display = 'none';
     iziToast.error({
-      message: `${error}`,
+      message: `${err}`,
       position: 'topRight',
     });
   }
