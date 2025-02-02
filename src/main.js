@@ -34,6 +34,10 @@ const onSearchFormSubmit = async event => {
     if (!userQuery) {
       event.currentTarget.elements.user_query.value = '';
       loaderEl.style.display = 'none';
+      iziToast.warning({
+        message: 'Please fill in the field!',
+        position: 'topRight',
+      });
       return;
     }
 
