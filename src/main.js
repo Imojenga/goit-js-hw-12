@@ -16,6 +16,7 @@ let modalWindow;
 let galleryCardEl;
 let rect;
 let downScroll;
+const perPage = 15;
 
 const scrollGallery = downScroll => {
   window.scrollBy({ top: downScroll, behavior: 'smooth' });
@@ -114,8 +115,9 @@ const onLoadMoreBtnClick = async event => {
 
     scrollGallery(downScroll);
 
-    if (page === Math.ceil(data.totalHits / data.hits.length)) {
+    if (page === Math.ceil(data.totalHits / perPage)) {
       loadMoreBtnEl.classList.add('is-hidden');
+      loadMoreBtnEl.removeEventListener('click', onLoadMoreBtnClick);
 
       iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
