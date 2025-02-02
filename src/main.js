@@ -24,7 +24,9 @@ const scrollGallery = downScroll => {
 const onSearchFormSubmit = async event => {
   try {
     event.preventDefault();
+    loadMoreBtnEl.classList.add('is-hidden');
     galleryEl.innerHTML = '';
+    page = 1;
     loaderEl.style.display = 'block';
 
     userQuery = event.currentTarget.elements.user_query.value.trim();
@@ -34,9 +36,6 @@ const onSearchFormSubmit = async event => {
       loaderEl.style.display = 'none';
       return;
     }
-
-    page = 1;
-    loadMoreBtnEl.classList.add('is-hidden');
 
     const { data } = await fetchByQuery(userQuery, page);
 
@@ -83,7 +82,10 @@ const onSearchFormSubmit = async event => {
     downScroll = (rect.bottom - rect.top) * 2 + 48;
   } catch (error) {
     loaderEl.style.display = 'none';
-    console.log(error);
+    iziToast.error({
+      message: `${error}`,
+      position: 'topRight',
+    });
   }
 };
 
@@ -118,6 +120,9 @@ const onLoadMoreBtnClick = async event => {
     }
   } catch (err) {
     loaderEl.style.display = 'none';
-    console.log(err);
+    iziToast.error({
+      message: `${error}`,
+      position: 'topRight',
+    });
   }
 };
